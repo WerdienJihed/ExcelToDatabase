@@ -1,0 +1,70 @@
+﻿<Window x:Class="ExcelToDatabase.Views.MappingView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExcelToDatabase.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:i1="http://www.caliburnproject.org"
+		mc:Ignorable="d"
+        Title="MappingView" Height="450" Width="800">
+	<Window.Resources>
+		<CollectionViewSource x:Key="ListOfColumns" Source="{Binding SourceColumns}"/>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="20px"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="auto"/>
+			<ColumnDefinition Width="20px"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="20px"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="20px"/>
+		</Grid.RowDefinitions>
+
+
+		<DataGrid 
+			Grid.Row="1" 
+			Grid.Column="1"
+			x:Name="MappingItems"
+			MinHeight="300px" 
+			MinWidth="500px"
+			AlternatingRowBackground ="LightBlue" 
+			AlternationCount = "2" 
+			AutoGenerateColumns = "False"
+			CanUserAddRows="False"
+			VerticalScrollBarVisibility="Auto"
+			ColumnWidth="*"
+			>
+			<DataGrid.Columns>
+
+				<DataGridTextColumn 
+							Header="Destination"
+							Binding="{Binding DestinationColumn}"
+							IsReadOnly="True"
+							/>
+				<DataGridComboBoxColumn 
+							Header="Source"
+							ItemsSource="{Binding Source={StaticResource ListOfColumns}}"
+							SelectedItemBinding="{Binding SourceColumn,Mode=TwoWay}"
+							/>
+
+			</DataGrid.Columns>
+		</DataGrid>
+
+			<Button 
+			x:Name="Execute" 
+			Content="Execute"
+			Grid.Row="3"
+			Grid.Column="2"
+			MinHeight="30px"
+			MinWidth="150px"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Bottom"
+			/>
+
+	</Grid>
+</Window>

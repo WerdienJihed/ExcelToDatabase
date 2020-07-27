@@ -1,0 +1,10 @@
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\ConsoleTest.exe.config
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\ConsoleTest.exe
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\ConsoleTest.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\DataAccess.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\DataAccess.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.csprojAssemblyReference.cache
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.csproj.CoreCompileInputs.cache
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.csproj.CopyComplete
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.exe
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.pdb
