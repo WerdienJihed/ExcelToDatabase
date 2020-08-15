@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using ExcelToDatabase.Services;
 using ExcelToDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,19 +24,22 @@ namespace ExcelToDatabase
 				.Singleton<IWindowManager, WindowManager>()
 				.Singleton<IEventAggregator, EventAggregator>();
 
+			_container.Singleton<IDialogManagerService, DialogManagerService>();
+
 			GetType().Assembly.GetTypes()
 				.Where(type => type.IsClass)
 				.Where(type => type.Name.EndsWith("ViewModel"))
 				.ToList()
 				.ForEach(viewModelType => _container.RegisterPerRequest(
 					viewModelType, viewModelType.ToString(), viewModelType));
-			
+
 			GetType().Assembly.GetTypes()
 				.Where(type => type.IsClass)
 				.Where(type => type.Namespace.Contains("Utils"))
 				.ToList()
 				.ForEach(viewModelType => _container.RegisterPerRequest(
-					viewModelType.GetInterface("I"+ viewModelType), viewModelType.ToString(), viewModelType));
+					viewModelType.GetInterface("I" + viewModelType), viewModelType.ToString(), viewModelType));
+
 		}
 
 		protected override void OnStartup(object sender, StartupEventArgs e)

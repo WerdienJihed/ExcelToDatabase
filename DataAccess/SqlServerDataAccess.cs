@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using log4net;
 
 namespace DataAccess
 {
 	public static class SqlServerDataAccess 
 	{
+		private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		public static bool TestConnection(string connectionString , out string error)
 		{
 			error = null;
@@ -24,7 +24,7 @@ namespace DataAccess
 			}
 			catch (Exception e)
 			{
-				error = e.Message;
+				log.Error(e.Message);
 				return false;
 			}
 		}
@@ -48,43 +48,69 @@ namespace DataAccess
 					}
 
 				}
+				return tableNames.OrderBy(t => t).ToList();
 			}
 			catch (Exception e)
 			{
-
+				log.Error(e.Message);
 				error = e.Message;
 			}
 
-			return  tableNames.OrderBy(t => t).ToList();
+			return null;
 		}
 
 		public static List<string> GetColumnNames(string connectionString, string tableName, out string error)
 		{
 			error = null;
 			List<string> columnsNames = new List<string>();
-			DataTable table = new DataTable(); 
-			using (SqlConnection con = new SqlConnection(connectionString))
+			DataTable table = new DataTable();
+			try
 			{
-				con.Open();
-				using (SqlCommand command = new SqlCommand($"SELECT TOP 0 * FROM dbo.{tableName}", con))
+				using (SqlConnection con = new SqlConnection(connectionString))
 				{
-					var reader = command.ExecuteReader();
-					table = reader.GetSchemaTable();
+					con.Open();
+					using (SqlCommand command = new SqlCommand($"SELECT TOP 0 * FROM dbo.{tableName}", con))
+					{
+						var reader = command.ExecuteReader();
+						table = reader.GetSchemaTable();
+					}
 				}
+
+				foreach (DataRow row in table.Rows)
+				{
+					string columnName = row.Field<string>("ColumnName");
+					columnsNames.Add(columnName);
+				}
+				return columnsNames;
 			}
-			
-			foreach (DataRow row in table.Rows)
+			catch (Exception e)
 			{
-				string columnName = row.Field<string>("ColumnName"); 
-				columnsNames.Add(columnName);
+				log.Error(e.Message);
 			}
-			return columnsNames; 
+			return null;
 		}
 
 		public static DataTable GetTableInformation(string connectionString, string tableName, out string error)
 		{
 			error = null;
-			return new DataTable();
+			DataTable table = new DataTable();
+			try
+			{
+				using (SqlConnection con = new SqlConnection(connectionString))
+				{
+					con.Open();
+					using (SqlCommand command = new SqlCommand($"SELECT TOP 0 * FROM dbo.{tableName}", con))
+					{
+						var reader = command.ExecuteReader();
+						table = reader.GetSchemaTable();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				log.Error(e.Message);
+			}
+			return table;
 		}
 
 		public static bool InsertRecords(string connectionString, string tableName, DataTable dataTable, out string error)
@@ -109,6 +135,7 @@ namespace DataAccess
 			
 			catch (Exception e)
 			{
+				log.Error(e.Message);
 				error = e.Message;
 				return false;
 			}

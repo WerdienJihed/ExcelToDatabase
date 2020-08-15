@@ -35,3 +35,7 @@ C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\DataA
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\DataAccess.pdb
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\Views\MappingView.g.cs
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\Views\MappingView.baml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\log4net.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\log4net.xml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\log4net.config
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\ExcelToDatabase_Content.g.cs

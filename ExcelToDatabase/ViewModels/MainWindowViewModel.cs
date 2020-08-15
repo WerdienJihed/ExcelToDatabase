@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Caliburn.Micro;
 using ExcelToDatabase.Models;
+using ExcelToDatabase.Services;
 using ExcelToDatabase.Utils;
 
 namespace ExcelToDatabase.ViewModels
@@ -18,6 +19,7 @@ namespace ExcelToDatabase.ViewModels
 
 		#region Props
 		public IWindowManager WindowManager { get; }
+		public IDialogManagerService DialogManager { get; }
 		public BindableCollection<string> Tables { get; set; }
 		public BindableCollection<string> Sheets { get; set; }
 		public SimpleContainer Container { get; }
@@ -69,15 +71,13 @@ namespace ExcelToDatabase.ViewModels
 		#endregion
 
 
-		public MainWindowViewModel(IWindowManager windowManager, SimpleContainer container)
+		public MainWindowViewModel(IWindowManager windowManager,IDialogManagerService dialogManager , SimpleContainer container)
 		{
 			WindowManager = windowManager;
+			DialogManager = dialogManager;
 			this.Container = container;
 			Tables = new BindableCollection<string>();
 			Sheets = new BindableCollection<string>();
-			ServerName = "DESKTOP-KGDL9CK";
-			DatabaseName = "Test";
-			Path = @"C:\Users\PC\Desktop\TestFile.xlsx";
 		}
 
 
@@ -87,33 +87,50 @@ namespace ExcelToDatabase.ViewModels
 			fileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
 			fileDialog.ShowDialog();
 			Path = fileDialog.FileName;
-			Container.UnregisterHandler(typeof(IExcelUtils), "ExcelUtils");
-			Container.RegisterHandler(typeof(IExcelUtils), "ExcelUtils", container => new ExcelUtils(Path));
-			var excelUtils = IoC.Get<IExcelUtils>();
-			string[] sheetNames = excelUtils.GetSheetNames(out string sheetError);
-			Sheets.Clear();
-			foreach (var item in sheetNames)
+			if (!string.IsNullOrWhiteSpace(path))
 			{
-				Sheets.Add(item);
+				Container.UnregisterHandler(typeof(IExcelUtils), "ExcelUtils");
+				Container.RegisterHandler(typeof(IExcelUtils), "ExcelUtils", container => new ExcelUtils(Path));
+				var excelUtils = IoC.Get<IExcelUtils>();
+				string[] sheetNames = excelUtils.GetSheetNames(out string sheetError);
+				Sheets.Clear();
+				foreach (var item in sheetNames)
+				{
+					Sheets.Add(item);
+				}
+				SelectedSheet = Sheets[0];
 			}
-			SelectedSheet = Sheets[0];
 		}
 		public void Connect()
 		{
-			string connectionString = $"Server ={ServerName}; Database = {DatabaseName}; Trusted_Connection = True";
-			Container.UnregisterHandler(typeof(ISqlServerUtils), "SqlUtils");
-			Container.RegisterHandler(typeof(ISqlServerUtils), "SqlUtils", container => new SqlServerUtils(connectionString));
-
-			var sqlServerUtils = IoC.Get<ISqlServerUtils>();
-			List<string> tablesNames = sqlServerUtils.GetTableNames(out string tablesError);
-
-			Tables.Clear();
-
-			foreach (var item in tablesNames)
+			if (string.IsNullOrWhiteSpace(ServerName) || string.IsNullOrWhiteSpace(databaseName))
 			{
-				Tables.Add(item);
+				DialogManager.ShowErrorMessageBox("server and databse cannot be empty !", "verification "); 
 			}
-			SelectedTable = Tables[0];
+			else
+			{
+				string connectionString = $"Server ={ServerName}; Database = {DatabaseName}; Trusted_Connection = True";
+				Container.UnregisterHandler(typeof(ISqlServerUtils), "SqlUtils");
+				Container.RegisterHandler(typeof(ISqlServerUtils), "SqlUtils", container => new SqlServerUtils(connectionString));
+
+				var sqlServerUtils = IoC.Get<ISqlServerUtils>();
+				List<string> tablesNames = sqlServerUtils.GetTableNames(out string tablesError);
+				if (tablesError != null)
+				{
+					DialogManager.ShowErrorMessageBox(tablesError,"Connection Failed !");
+				}
+				else
+				{
+					Tables.Clear();
+
+					foreach (var item in tablesNames)
+					{
+						Tables.Add(item);
+					}
+					SelectedTable = Tables[0];
+				}
+			}
+			
 		}
 		public void OpenConfiguration()
 		{
@@ -127,7 +144,9 @@ namespace ExcelToDatabase.ViewModels
 		{
 			var destinationColumns = IoC.Get<ColumnNamesHolders>("ColumnNamesHolders").DestinationColumnNames;
 			var sourceColumns = IoC.Get<ColumnNamesHolders>("ColumnNamesHolders").SourceColumnNames;
+			
 			var vm = IoC.Get<MappingViewModel>();
+			
 			vm.SheetName = SelectedSheet;
 			vm.TableName = SelectedTable; 
 			foreach (var item in destinationColumns)

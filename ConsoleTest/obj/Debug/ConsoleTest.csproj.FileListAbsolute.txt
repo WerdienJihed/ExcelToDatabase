@@ -8,3 +8,5 @@ C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTe
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.csproj.CopyComplete
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.exe
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\log4net.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\log4net.xml

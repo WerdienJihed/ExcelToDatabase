@@ -1,6 +1,9 @@
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Debug\DataAccess.dll
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Debug\DataAccess.pdb
-C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess.csprojAssemblyReference.cache
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess.csproj.CoreCompileInputs.cache
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess.dll
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Debug\log4net.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Debug\log4net.xml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess.csprojAssemblyReference.cache

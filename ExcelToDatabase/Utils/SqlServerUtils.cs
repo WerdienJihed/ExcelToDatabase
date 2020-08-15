@@ -1,4 +1,5 @@
 ﻿using DataAccess;
+using ExcelToDatabase.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -32,9 +33,23 @@ namespace ExcelToDatabase.Utils
 			return SqlServerDataAccess.GetColumnNames(ConnectionString, tableName, out error);
 		}
 
-		public DataTable GetTableInformation(string tableName, out string error)
+		public List<Column> GetColumnsInformation(string tableName, out string error)
 		{
-			return SqlServerDataAccess.GetTableInformation(ConnectionString, tableName, out error);
+			List<Column> columns = new List<Column>(); 
+			var datatable = SqlServerDataAccess.GetTableInformation(ConnectionString, tableName, out error);
+
+			foreach (DataRow item in datatable.Rows)
+			{
+
+				Column column = new Column(); 
+				column.Name = item.Field<string>("ColumnName");
+				column.IsNullable = item.Field<bool>("AllowDBNull");
+				column.Type = item.Field<Type>("datatype");
+				
+
+				columns.Add(column); 
+			}
+			return columns; 
 		}
 
 		public bool InsertRecords(string tableName, DataTable dataTable, out string error)
