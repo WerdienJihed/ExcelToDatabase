@@ -3,119 +3,203 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ExcelToDatabase.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:i1="http://www.caliburnproject.org"
 		mc:Ignorable="d"
-        Title="MainWindowView" Height="450" Width="800"
+		WindowStartupLocation="CenterScreen"
+		ResizeMode="NoResize"
+		Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Title="MainWindowView" Height="800" Width="800"
 		FontSize="18"
 		>
 	<Grid Background="White">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="20"/>
+			<RowDefinition Height="20px"/>
 			<RowDefinition Height="auto"/>
+			<RowDefinition Height="20px"/>
 			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
+			<RowDefinition Height="20px"/>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="30px"/>
 			<RowDefinition Height="20"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="20"/>
-			<ColumnDefinition Width="auto"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="100px"/>
 			<ColumnDefinition Width="20px"/>
-			<ColumnDefinition Width="100px"/>
+			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="20px"/>
 		</Grid.ColumnDefinitions>
 
-		<TextBlock 
-			Text="FilePath" 
+		<GroupBox 
+			Grid.Row="1"
+			Grid.Column="1"
+			Header="Excel configuration"
+			Style="{StaticResource MaterialDesignCardGroupBox}"
+			>
+			
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition  Height="20px"/>
+					<RowDefinition  Height="auto"/>
+					<RowDefinition  Height="20px"/>
+					<RowDefinition  Height="auto"/>
+					<RowDefinition Height="20px" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="20px"/>
+					<ColumnDefinition Width="auto"/>
+					<ColumnDefinition Width="20px"/>
+					<ColumnDefinition MinWidth="150px"/>
+					<ColumnDefinition Width="20px"/>
+					<ColumnDefinition MaxWidth="100px"/>
+					<ColumnDefinition Width="20px"/>
+				</Grid.ColumnDefinitions>
+
+			<TextBlock 
+			Text="File path" 
 			Grid.Row="1" 
 			Grid.Column="1"
+			Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
 			/>
-		<TextBox 
+			
+			<TextBox 
 			x:Name="Path"
 			Grid.Row="1"
-			Grid.Column="2"
+			Grid.Column="3"
 			IsReadOnly="True"
 			Background="LightGray"
 			/>
-		<Button 
+			
+			<Button 
 			x:Name="Upload"
 			Grid.Row="1"
 			Grid.Column="5"
 			Content="Upload"
+			Style="{StaticResource MaterialDesignRaisedLightButton}"
 			/>
-		<TextBlock 
-			Text="Server Name"
-			Grid.Row="2"
-			Grid.Column="1"
-			/>
-		<TextBox
-			x:Name="ServerName"
-			Grid.Row="2"
-			Grid.Column="2"
-			/>
-		<TextBlock
-			Text="Database Name"
+			
+			<TextBlock 
+			Text="Sheet name"
 			Grid.Row="3"
 			Grid.Column="1"
+			Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
 			/>
-		<TextBox 
+
+			<ComboBox 
+			x:Name="Sheets"
+			Grid.Row="3"
+			Grid.Column="3"
+			SelectedItem="{Binding SelectedSheet, Mode=TwoWay}"
+			IsReadOnly="True" 
+			MinWidth="200"
+			/>
+			</Grid>
+		</GroupBox>
+
+
+		<GroupBox 
+			Grid.Row="3" 
+			Grid.Column="1"
+			Header="Sql Server configuration"
+			Style="{StaticResource MaterialDesignCardGroupBox}"
+			>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="20px"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="20px"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="20px"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="20px"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="20px"/>
+					<ColumnDefinition Width="auto"/>
+					<ColumnDefinition Width="20px"/>
+					<ColumnDefinition MinWidth="150px"/>
+					<ColumnDefinition Width="20px"/>
+					<ColumnDefinition MaxWidth="100px"/>
+					<ColumnDefinition Width="20px"/>
+				</Grid.ColumnDefinitions>
+
+			<TextBlock 
+			Text="Server"
+			Grid.Row="1"
+			Grid.Column="1"
+			Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+			/>
+			
+			<TextBox
+			x:Name="ServerName"
+			Grid.Row="1"
+			Grid.Column="3"
+			/>
+			
+			<TextBlock
+			Text="Database"
+			Grid.Row="3"
+			Grid.Column="1"
+			Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+			/>
+			
+			<TextBox 
 			x:Name="DatabaseName"
 			Grid.Row="3"
-			Grid.Column="2"
+			Grid.Column="3"
 			/>
-		<Button 
+			
+			<Button 
 			x:Name="Connect"
 			Content="Connect"
 			Grid.Row="3"
 			Grid.Column="5"
+			Style="{StaticResource MaterialDesignRaisedLightButton}"
+				
 			/>
 
-		<TextBlock 
-			Text="Table name"
-			Grid.Row="4"
+			<TextBlock 
+			Text="Table"
+			Grid.Row="5"
 			Grid.Column="1"
+			Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
 			/>
 
-		<ComboBox 
+			<ComboBox 
 			x:Name="Tables"
-			Grid.Row="4"
-			Grid.Column="2"
+			Grid.Row="5"
+			Grid.Column="3"
 			SelectedItem="{Binding SelectedTable, Mode=TwoWay}"
 			IsReadOnly="True" 
-			MinWidth="200"
-		/>
-		<TextBlock 
-			Text="Sheet name"
+			MinWidth="200"/>
+			
+			</Grid>
+
+		</GroupBox>
+
+		<Grid
 			Grid.Row="5"
 			Grid.Column="1"
-			/>
-
-		<ComboBox 
-			x:Name="Sheets"
-			Grid.Row="5"
-			Grid.Column="2"
-			SelectedItem="{Binding SelectedSheet, Mode=TwoWay}"
-			IsReadOnly="True" 
-			MinWidth="200"
-		/>
-		<Button 
+			HorizontalAlignment="Right"
+			 VerticalAlignment="Bottom"
+			>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition  Width="20px"/>
+				<ColumnDefinition  Width="auto"/>
+				<ColumnDefinition  Width="20px"/>
+				<ColumnDefinition  Width="auto"/>
+				<ColumnDefinition  Width="20px"/>
+			</Grid.ColumnDefinitions>
+			<Button 
 			x:Name="OpenConfiguration"
-			Grid.Row="9"
-			Grid.Column="3"
-			Content="Configure"
+			Grid.Column="1"
+			Content="Configuration"
+			Style="{StaticResource MaterialDesignRaisedLightButton}"
 			/>
-		<Button 
+			<Button 
 			x:Name="OpenMapping"
-			Grid.Row="9"
-			Grid.Column="5"
+			Grid.Column="3"
 			Content="Mapping"
+			Style="{StaticResource MaterialDesignRaisedLightButton}"
 			/>
+		</Grid>
+	
 	</Grid>
 </Window>

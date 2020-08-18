@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ExcelToDatabase.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:i1="http://www.caliburnproject.org"
 		mc:Ignorable="d"
-        Title="MappingView" Height="450" Width="800">
+		WindowStartupLocation="CenterScreen"
+		ResizeMode="NoResize"
+		Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Title="MappingView" Height="800" Width="800">
+	
 	<Window.Resources>
 		<CollectionViewSource x:Key="ListOfColumns" Source="{Binding SourceColumns}"/>
 	</Window.Resources>
@@ -29,6 +33,7 @@
 		<DataGrid 
 			Grid.Row="1" 
 			Grid.Column="1"
+			Grid.ColumnSpan="2"
 			x:Name="MappingItems"
 			MinHeight="300px" 
 			MinWidth="500px"
@@ -51,6 +56,8 @@
 							ItemsSource="{Binding Source={StaticResource ListOfColumns}}"
 							SelectedItemBinding="{Binding SourceColumn,Mode=TwoWay}"
 							/>
+
+
 
 			</DataGrid.Columns>
 		</DataGrid>

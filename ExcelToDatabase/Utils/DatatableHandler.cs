@@ -26,6 +26,7 @@ namespace ExcelToDatabase.Utils
 			}
 			return result; 
 		}
+		
 		public static DataTable ChangeColumnNames(DataTable originalTable , Dictionary<string,string> mapping )
 		{
 			DataTable result = originalTable.Copy();
@@ -97,7 +98,7 @@ namespace ExcelToDatabase.Utils
 						switch (columnType.ToString())
 						{
 							case "System.String":
-								row[column] = "";
+								row[column] = string.Empty;
 								break;
 							case "System.Guid":
 								row[column] = Guid.NewGuid();

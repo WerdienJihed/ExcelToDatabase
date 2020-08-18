@@ -39,3 +39,8 @@ C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\log4n
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\log4net.xml
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\log4net.config
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\ExcelToDatabase_Content.g.cs
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\MaterialDesignColors.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\MaterialDesignThemes.Wpf.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\MaterialDesignColors.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\MaterialDesignThemes.Wpf.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\MaterialDesignThemes.Wpf.xml

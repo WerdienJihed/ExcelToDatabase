@@ -1,10 +1,13 @@
 ﻿<Application x:Class="ExcelToDatabase.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ExcelToDatabase">
+             xmlns:local="clr-namespace:ExcelToDatabase"
+			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
+				<materialDesign:CustomColorTheme BaseTheme="Light" PrimaryColor="#616163" SecondaryColor="#BAAB68" />
+				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
 				<ResourceDictionary>
 					<local:Bootsrapper x:Key="Bootsrapper" />
 				</ResourceDictionary>

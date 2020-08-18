@@ -19,41 +19,32 @@ namespace DataAccess
 		}
 		public static String[] GetSheetNames(string connectionString , out string error)
 		{
-			OleDbConnection objConn = null;
-			DataTable dt = null;
+			OleDbConnection connection = null;
+			DataTable datatable = null;
 			error = null;
 
 			try
 			{
-				// Create connection object by using the preceding connection string.
-				objConn = new OleDbConnection(connectionString);
-				// Open connection with the database.
-				objConn.Open();
-				// Get the data table containg the schema guid.
-				dt = objConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+				connection = new OleDbConnection(connectionString);
 
-				if (dt == null)
+				connection.Open();
+
+				datatable = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+
+				if (datatable == null)
 				{
 					
 					return null;
 				}
 
-				String[] excelSheets = new String[dt.Rows.Count];
+				String[] excelSheets = new String[datatable.Rows.Count];
 				int i = 0;
 
-				// Add the sheet name to the string array.
-				foreach (DataRow row in dt.Rows)
+				foreach (DataRow row in datatable.Rows)
 				{
 					excelSheets[i] = row["TABLE_NAME"].ToString();
 					i++;
 				}
-
-				// Loop through all of the sheets if you want too...
-				for (int j = 0; j < excelSheets.Length; j++)
-				{
-					// Query each excel sheet.
-				}
-
 				return excelSheets;
 			}
 			catch (Exception e)
@@ -64,15 +55,14 @@ namespace DataAccess
 			}
 			finally
 			{
-				// Clean up.
-				if (objConn != null)
+				if (connection != null)
 				{
-					objConn.Close();
-					objConn.Dispose();
+					connection.Close();
+					connection.Dispose();
 				}
-				if (dt != null)
+				if (datatable != null)
 				{
-					dt.Dispose();
+					datatable.Dispose();
 				}
 			}
 		}

@@ -27,6 +27,8 @@ namespace ExcelToDatabase.ViewModels
 		{
 			var excelUtils = IoC.Get<IExcelUtils>("ExcelUtils"); 
 			var sqlServerUtils = IoC.Get<ISqlServerUtils>("SqlUtils");
+
+
 			var table =  excelUtils.GetRecords(SheetName,out string error);
 			if (error != null)
 			{
@@ -37,18 +39,25 @@ namespace ExcelToDatabase.ViewModels
 				var filtredTable = DatatableHandler.FilterDataTable(table, SourceColumns);
 
 				Dictionary<string, string> mapping = new Dictionary<string, string>();
+				
 				foreach (var item in MappingItems)
 				{
+					if (item.SourceColumn == null)
+					{
+						DialogManager.ShowErrorMessageBox("Please specify the source column for each destination column !", "Error");
+						return;
+					}
 					mapping.Add(item.SourceColumn, item.DestinationColumn);
 				}
+				
 				var finalResult = DatatableHandler.ChangeColumnNames(filtredTable, mapping);
 
-				// Add default values and convert types
+				
 
-				var ColumnInformation = sqlServerUtils.GetColumnsInformation(TableName, out string error3);
+				var ColumnsInformation = sqlServerUtils.GetColumnsInformation(TableName, out string error3);
 
-				finalResult = DatatableHandler.ColumnConvertTypes(finalResult, ColumnInformation);
-				finalResult = DatatableHandler.ColumnReplaceNullValues(finalResult, ColumnInformation);
+				finalResult = DatatableHandler.ColumnConvertTypes(finalResult, ColumnsInformation);
+				finalResult = DatatableHandler.ColumnReplaceNullValues(finalResult, ColumnsInformation);
 
 				bool isInserted = sqlServerUtils.InsertRecords(TableName, finalResult, out string error2);
 				if (!isInserted)

@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using ExcelToDatabase.Models;
+using ExcelToDatabase.Services;
 using ExcelToDatabase.Utils;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,14 @@ namespace ExcelToDatabase.ViewModels
 		public BindableCollection<Column> ColumnsFromSql { get; set; }
 		public BindableCollection<Column> ColumnsFromExcel { get; set; }
 		public SimpleContainer Container { get; set; }
-		public ConfigurationViewModel(SimpleContainer container)
+		public IDialogManagerService DialogManager { get; }
+		public ConfigurationViewModel(SimpleContainer container, IDialogManagerService dialogManager)
 		{
 			Container = container;
 			ColumnsFromSql = new BindableCollection<Column>();
 			ColumnsFromExcel = new BindableCollection<Column>();
-		}
+			DialogManager = dialogManager;
+	}
 
 
 		public void OnLoad()
@@ -67,8 +70,13 @@ namespace ExcelToDatabase.ViewModels
 			ColumnNamesHolders columnNamesHolders = new ColumnNamesHolders(excelColumnNames, sqlColumnNames);
 			Container.UnregisterHandler<ColumnNamesHolders>();
 			Container.RegisterHandler(typeof(ColumnNamesHolders), "ColumnNamesHolders", container => new ColumnNamesHolders(excelColumnNames, sqlColumnNames));
-			var x = IoC.Get<ColumnNamesHolders>(); 
-			if (window != null)
+			var x = IoC.Get<ColumnNamesHolders>();
+
+			if (sqlColumnNames.Count != excelColumnNames.Count)
+			{
+				DialogManager.ShowErrorMessageBox("The number of source fields specified does not match the number of destination fields ! ", "Error");
+			}
+			else if (window != null)
 			{
 				window.Close();
 			}

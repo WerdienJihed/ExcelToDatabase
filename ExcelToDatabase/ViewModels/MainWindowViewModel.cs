@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Caliburn.Micro;
 using ExcelToDatabase.Models;
@@ -83,14 +84,11 @@ namespace ExcelToDatabase.ViewModels
 
 		public void Upload()
 		{
-			OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
-			fileDialog.ShowDialog();
-			Path = fileDialog.FileName;
+			Path = GetPathFromFileDialog();
+			
 			if (!string.IsNullOrWhiteSpace(path))
 			{
-				Container.UnregisterHandler(typeof(IExcelUtils), "ExcelUtils");
-				Container.RegisterHandler(typeof(IExcelUtils), "ExcelUtils", container => new ExcelUtils(Path));
+				RegisterExcelUtils(path);
 				var excelUtils = IoC.Get<IExcelUtils>();
 				string[] sheetNames = excelUtils.GetSheetNames(out string sheetError);
 				Sheets.Clear();
@@ -101,6 +99,21 @@ namespace ExcelToDatabase.ViewModels
 				SelectedSheet = Sheets[0];
 			}
 		}
+
+		private void RegisterExcelUtils(string path)
+		{
+			Container.UnregisterHandler(typeof(IExcelUtils), "ExcelUtils");
+			Container.RegisterHandler(typeof(IExcelUtils), "ExcelUtils", container => new ExcelUtils(path));
+		}
+
+		private string GetPathFromFileDialog()
+		{
+			OpenFileDialog fileDialog = new OpenFileDialog();
+			fileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+			fileDialog.ShowDialog();
+			return fileDialog.FileName;
+		}
+
 		public void Connect()
 		{
 			if (string.IsNullOrWhiteSpace(ServerName) || string.IsNullOrWhiteSpace(databaseName))
@@ -109,15 +122,13 @@ namespace ExcelToDatabase.ViewModels
 			}
 			else
 			{
-				string connectionString = $"Server ={ServerName}; Database = {DatabaseName}; Trusted_Connection = True";
-				Container.UnregisterHandler(typeof(ISqlServerUtils), "SqlUtils");
-				Container.RegisterHandler(typeof(ISqlServerUtils), "SqlUtils", container => new SqlServerUtils(connectionString));
+				RegisterSqlServerUtils();
 
 				var sqlServerUtils = IoC.Get<ISqlServerUtils>();
 				List<string> tablesNames = sqlServerUtils.GetTableNames(out string tablesError);
 				if (tablesError != null)
 				{
-					DialogManager.ShowErrorMessageBox(tablesError,"Connection Failed !");
+					DialogManager.ShowErrorMessageBox(tablesError, "Connection Failed !");
 				}
 				else
 				{
@@ -130,35 +141,76 @@ namespace ExcelToDatabase.ViewModels
 					SelectedTable = Tables[0];
 				}
 			}
-			
+
 		}
+
+		private void RegisterSqlServerUtils()
+		{
+			string connectionString = $"Server ={ServerName}; Database = {DatabaseName}; Trusted_Connection = True";
+			Container.UnregisterHandler(typeof(ISqlServerUtils), "SqlUtils");
+			Container.RegisterHandler(typeof(ISqlServerUtils), "SqlUtils", container => new SqlServerUtils(connectionString));
+		}
+
 		public void OpenConfiguration()
 		{
-			var vm = IoC.Get<ConfigurationViewModel>();
-			vm.TableName = SelectedTable;
-			vm.SheetName = SelectedSheet;
-			WindowManager.ShowWindow(vm);
+			bool isValid = BasicValidation();
+			if (isValid)
+			{
+				var vm = IoC.Get<ConfigurationViewModel>();
+				vm.TableName = SelectedTable;
+				vm.SheetName = SelectedSheet;
+				WindowManager.ShowWindow(vm);
+			}
+		}
+
+		private bool BasicValidation()
+		{
+			if (string.IsNullOrWhiteSpace(DatabaseName) || string.IsNullOrWhiteSpace(ServerName))
+			{
+				DialogManager.ShowErrorMessageBox("server and databse cannot be empty !", "verification ");
+				return false;
+			}
+			if (string.IsNullOrWhiteSpace(Path))
+			{
+				DialogManager.ShowErrorMessageBox("Please select a file !", "verification ");
+				return false;
+			}
+			if (string.IsNullOrWhiteSpace(SelectedTable))
+			{
+				DialogManager.ShowErrorMessageBox("Please select a table !", "verification ");
+				return false;
+			}
+			if (string.IsNullOrWhiteSpace(SelectedSheet))
+			{
+				DialogManager.ShowErrorMessageBox("Please select a sheet !", "verification ");
+				return false;
+			}
+			return true; 
 		}
 
 		public void OpenMapping()
 		{
-			var destinationColumns = IoC.Get<ColumnNamesHolders>("ColumnNamesHolders").DestinationColumnNames;
-			var sourceColumns = IoC.Get<ColumnNamesHolders>("ColumnNamesHolders").SourceColumnNames;
-			
-			var vm = IoC.Get<MappingViewModel>();
-			
-			vm.SheetName = SelectedSheet;
-			vm.TableName = SelectedTable; 
-			foreach (var item in destinationColumns)
+			bool isValid = BasicValidation();
+			if (isValid)
 			{
-				vm.MappingItems.Add(new MappingItem(item, null));
-			}
-			foreach (var item in sourceColumns)
-			{
-				vm.SourceColumns.Add(item); 
-			}
+				var destinationColumns = IoC.Get<ColumnNamesHolders>("ColumnNamesHolders").DestinationColumnNames;
+				var sourceColumns = IoC.Get<ColumnNamesHolders>("ColumnNamesHolders").SourceColumnNames;
 
-			WindowManager.ShowWindow(vm);
+				var vm = IoC.Get<MappingViewModel>();
+
+				vm.SheetName = SelectedSheet;
+				vm.TableName = SelectedTable;
+				foreach (var item in destinationColumns)
+				{
+					vm.MappingItems.Add(new MappingItem(item, null));
+				}
+				foreach (var item in sourceColumns)
+				{
+					vm.SourceColumns.Add(item);
+				}
+
+				WindowManager.ShowWindow(vm);
+			}
 		}
 	}
 }
