@@ -6,4 +6,3 @@ C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Debug\log4net.dll
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Debug\log4net.xml
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess.csproj.CopyComplete
-C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Debug\DataAccess.csprojAssemblyReference.cache

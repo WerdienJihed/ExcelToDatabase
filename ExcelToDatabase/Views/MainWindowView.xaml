@@ -8,7 +8,7 @@
 		ResizeMode="NoResize"
 		Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Title="MainWindowView" Height="800" Width="800"
+        Title="Excel To Database" Height="800" Width="800"
 		FontSize="18"
 		>
 	<Grid Background="White">
@@ -188,9 +188,9 @@
 				<ColumnDefinition  Width="20px"/>
 			</Grid.ColumnDefinitions>
 			<Button 
-			x:Name="OpenConfiguration"
+			x:Name="OpenColumnsConfiguration"
 			Grid.Column="1"
-			Content="Configuration"
+			Content="columns Configuration"
 			Style="{StaticResource MaterialDesignRaisedLightButton}"
 			/>
 			<Button 

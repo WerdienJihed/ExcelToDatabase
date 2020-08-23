@@ -10,3 +10,14 @@ C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTe
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\obj\Debug\ConsoleTest.pdb
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\log4net.dll
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\log4net.xml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\log4net.config
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\ExcelToDatabase.exe
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\Caliburn.Micro.Platform.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\Caliburn.Micro.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\Caliburn.Micro.Platform.Core.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\ExcelToDatabase.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\ExcelToDatabase.exe.config
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\Caliburn.Micro.Platform.xml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\Caliburn.Micro.xml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ConsoleTest\bin\Debug\Caliburn.Micro.Platform.Core.xml

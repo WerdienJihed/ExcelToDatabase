@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\App.xaml
-31879233387
+3-412348419
 1-1575529357
-22-534818542
-130-1244452182
-Views\ConfigurationView.xaml;Views\MainWindowView.xaml;Views\MappingView.xaml;
+22-1693623031
+131109275950
+Views\ColumnsConfigurationView.xaml;Views\MainWindowView.xaml;Views\MappingView.xaml;
 
-True
+False
 

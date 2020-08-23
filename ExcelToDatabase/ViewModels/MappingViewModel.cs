@@ -3,7 +3,7 @@ using ExcelToDatabase.Models;
 using ExcelToDatabase.Services;
 using ExcelToDatabase.Utils;
 using System.Collections.Generic;
-
+using System.Data;
 
 namespace ExcelToDatabase.ViewModels
 {
@@ -11,55 +11,55 @@ namespace ExcelToDatabase.ViewModels
 	{
 		public IWindowManager window { get; set; }
 		public IDialogManagerService DialogManager { get; set; }
+		public IExcelBusinessLogic ExcelBusinessLogic { get; set; }
+		public ISqlServerBusinessLogic SqlServerBusinessLogic { get; set; }
 		public List<MappingItem> MappingItems { get; set; }
 		public List<string> SourceColumns { get; set; }
 		public string TableName { get; set; }
 		public string SheetName { get; set; }
 	
-		public MappingViewModel(IDialogManagerService dialogManager)
+		public MappingViewModel(IDialogManagerService dialogManager,IExcelBusinessLogic excelBusinessLogic , ISqlServerBusinessLogic sqlServerBusinessLogic)
 		{
 			MappingItems = new List<MappingItem>();
 			DialogManager = dialogManager;
 			SourceColumns = new List<string>();
+			ExcelBusinessLogic = excelBusinessLogic;
+			SqlServerBusinessLogic = sqlServerBusinessLogic;
 		}
 
 		public void Execute()
 		{
-			var excelUtils = IoC.Get<IExcelUtils>("ExcelUtils"); 
-			var sqlServerUtils = IoC.Get<ISqlServerUtils>("SqlUtils");
 
 
-			var table =  excelUtils.GetRecords(SheetName,out string error);
+			DataTable sourceTable =  ExcelBusinessLogic.GetRecords(SheetName,out string error);
 			if (error != null)
 			{
 				DialogManager.ShowErrorMessageBox(error,"Somthing went wrong !");
 			}
 			else
 			{
-				var filtredTable = DatatableHandler.FilterDataTable(table, SourceColumns);
+				
 
 				Dictionary<string, string> mapping = new Dictionary<string, string>();
 				
-				foreach (var item in MappingItems)
+				foreach (MappingItem item in MappingItems)
 				{
 					if (item.SourceColumn == null)
 					{
 						DialogManager.ShowErrorMessageBox("Please specify the source column for each destination column !", "Error");
 						return;
 					}
-					mapping.Add(item.SourceColumn, item.DestinationColumn);
+					mapping.Add(item.DestinationColumn, item.SourceColumn);
 				}
-				
-				var finalResult = DatatableHandler.ChangeColumnNames(filtredTable, mapping);
 
-				
 
-				var ColumnsInformation = sqlServerUtils.GetColumnsInformation(TableName, out string error3);
 
-				finalResult = DatatableHandler.ColumnConvertTypes(finalResult, ColumnsInformation);
-				finalResult = DatatableHandler.ColumnReplaceNullValues(finalResult, ColumnsInformation);
 
-				bool isInserted = sqlServerUtils.InsertRecords(TableName, finalResult, out string error2);
+				DataTable tableSchema = SqlServerBusinessLogic.GetTableSchema(TableName, out string error3);
+
+				DataTable finalResult = DatatableHandler.PrepareTable(sourceTable, tableSchema,mapping);
+
+				bool isInserted = SqlServerBusinessLogic.InsertRecords(TableName, finalResult, out string error2);
 				if (!isInserted)
 				{
 					DialogManager.ShowErrorMessageBox(error2, "Failed To Execute !");

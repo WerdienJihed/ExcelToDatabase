@@ -29,8 +29,6 @@ C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\Excel
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\App.baml
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\ExcelToDatabase.csprojAssemblyReference.cache
-C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\Views\ConfigurationView.g.cs
-C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\Views\ConfigurationView.baml
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\DataAccess.dll
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\DataAccess.pdb
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\Views\MappingView.g.cs
@@ -44,3 +42,8 @@ C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\Mater
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\MaterialDesignColors.pdb
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\Autofac.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\Autofac.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\bin\Debug\Autofac.xml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\Views\ColumnsConfigurationView.baml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\ExcelToDatabase\obj\Debug\Views\ColumnsConfigurationView.g.cs

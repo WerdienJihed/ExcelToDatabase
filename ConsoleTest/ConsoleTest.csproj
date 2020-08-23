@@ -54,6 +54,10 @@
       <Project>{88202DD4-1E9E-4F91-BEB1-79F13CA68C8A}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExcelToDatabase\ExcelToDatabase.csproj">
+      <Project>{F99173FC-DE08-4BD1-BC46-9958593D608F}</Project>
+      <Name>ExcelToDatabase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

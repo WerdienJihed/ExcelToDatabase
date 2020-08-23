@@ -1,0 +1,8 @@
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Release\DataAccess.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Release\DataAccess.pdb
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Release\log4net.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\bin\Release\log4net.xml
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Release\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Release\DataAccess.csproj.CopyComplete
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Release\DataAccess.dll
+C:\Users\PC\source\repos\ExcelToDatabaseSolution\DataAccess\obj\Release\DataAccess.pdb

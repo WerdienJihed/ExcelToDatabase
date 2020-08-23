@@ -89,7 +89,7 @@ namespace ExcelToDatabase.ViewModels
 			if (!string.IsNullOrWhiteSpace(path))
 			{
 				RegisterExcelUtils(path);
-				var excelUtils = IoC.Get<IExcelUtils>();
+				var excelUtils = IoC.Get<IExcelBusinessLogic >();
 				string[] sheetNames = excelUtils.GetSheetNames(out string sheetError);
 				Sheets.Clear();
 				foreach (var item in sheetNames)
@@ -102,8 +102,8 @@ namespace ExcelToDatabase.ViewModels
 
 		private void RegisterExcelUtils(string path)
 		{
-			Container.UnregisterHandler(typeof(IExcelUtils), "ExcelUtils");
-			Container.RegisterHandler(typeof(IExcelUtils), "ExcelUtils", container => new ExcelUtils(path));
+			Container.UnregisterHandler(typeof(IExcelBusinessLogic ), "ExcelUtils");
+			Container.RegisterHandler(typeof(IExcelBusinessLogic ), "ExcelUtils", container => new ExcelBusinessLogic (path));
 		}
 
 		private string GetPathFromFileDialog()
@@ -122,41 +122,45 @@ namespace ExcelToDatabase.ViewModels
 			}
 			else
 			{
-				RegisterSqlServerUtils();
-
-				var sqlServerUtils = IoC.Get<ISqlServerUtils>();
-				List<string> tablesNames = sqlServerUtils.GetTableNames(out string tablesError);
-				if (tablesError != null)
+				string connectionString = $"Server ={ServerName}; Database = {DatabaseName}; Trusted_Connection = True";
+				ISqlServerBusinessLogic sqlServerBusinessLogic = new SqlServerBusinessLogic(connectionString);
+				bool isValidConnectionString = sqlServerBusinessLogic.TestConnection(out string error);
+				if (!isValidConnectionString)
 				{
-					DialogManager.ShowErrorMessageBox(tablesError, "Connection Failed !");
+					DialogManager.ShowErrorMessageBox(error, "Error!");
 				}
 				else
 				{
-					Tables.Clear();
-
-					foreach (var item in tablesNames)
+					Container.UnregisterHandler(typeof(ISqlServerBusinessLogic), "SqlUtils");
+					Container.RegisterHandler(typeof(ISqlServerBusinessLogic), "SqlUtils", container => new SqlServerBusinessLogic(connectionString));
+					var sqlServerUtils = IoC.Get<ISqlServerBusinessLogic>();
+					List<string> tablesNames = sqlServerUtils.GetTableNames(out string tablesError);
+					if (tablesError != null)
 					{
-						Tables.Add(item);
+						DialogManager.ShowErrorMessageBox(tablesError, "Connection Failed !");
 					}
-					SelectedTable = Tables[0];
+					else
+					{
+						Tables.Clear();
+
+						foreach (var item in tablesNames)
+						{
+							Tables.Add(item);
+						}
+						SelectedTable = Tables[0];
+					}
 				}
 			}
 
 		}
 
-		private void RegisterSqlServerUtils()
-		{
-			string connectionString = $"Server ={ServerName}; Database = {DatabaseName}; Trusted_Connection = True";
-			Container.UnregisterHandler(typeof(ISqlServerUtils), "SqlUtils");
-			Container.RegisterHandler(typeof(ISqlServerUtils), "SqlUtils", container => new SqlServerUtils(connectionString));
-		}
 
-		public void OpenConfiguration()
+		public void OpenColumnsConfiguration()
 		{
 			bool isValid = BasicValidation();
 			if (isValid)
 			{
-				var vm = IoC.Get<ConfigurationViewModel>();
+				var vm = IoC.Get<ColumnsConfigurationViewModel>();
 				vm.TableName = SelectedTable;
 				vm.SheetName = SelectedSheet;
 				WindowManager.ShowWindow(vm);
